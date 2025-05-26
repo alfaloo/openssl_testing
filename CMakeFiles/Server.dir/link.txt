@@ -1,1 +1,0 @@
-/usr/bin/c++ -std=c++20 -O2 -DNDEBUG CMakeFiles/Server.dir/Server.cpp.o -o build/Server  -Wl,-rpath,/usr/local/lib64 /usr/local/lib64/libssl.so /usr/local/lib64/libcrypto.so 
