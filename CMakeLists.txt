@@ -4,7 +4,7 @@ project(OPENSSL_TESTING)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-set(CMAKE_CXX_FLAGS "-std=c++20 -O2 -DNDEBUG")
+set(CMAKE_CXX_FLAGS "-std=c++20 -O2 -g")
 
 add_executable(Client ${PROJECT_SOURCE_DIR}/Client.cpp)
 target_include_directories(Client PRIVATE ${PROJECT_SOURCE_DIR} /usr/local/include)

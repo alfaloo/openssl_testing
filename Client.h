@@ -1,6 +1,7 @@
 #include <iostream>
 #include <openssl/ssl.h>
 #include <openssl/err.h>
+#include <openssl/ossl_iovec.h>
 #include <string>
 #include <sys/socket.h>
 #include <arpa/inet.h>
@@ -62,9 +63,18 @@ void RunClient() {
     if (SSL_connect(ssl) <= 0) {
         ERR_print_errors_fp(stderr);
     } else {
-        const char msg[] = "Hello, SSL server!";
-        SSL_write(ssl, msg, strlen(msg));
-        std::cout << "[Client] Sent: " << std::string(msg, strlen(msg)) << "\n";
+        OSSL_IOVEC iov[3];
+        const char msg0[] = "Hello,";
+        iov[0].data = (void*) msg0;
+        iov[0].data_len = strlen(msg0);
+        const char msg1[] = " SSL";
+        iov[1].data = (void*) msg1;
+        iov[1].data_len = strlen(msg1);
+        const char msg2[] = " server!";
+        iov[2].data = (void*) msg2;
+        iov[2].data_len = strlen(msg2);
+        SSL_writev(ssl, iov, 3);
+        std::cout << "[Client] Sent: " << std::string(msg0, strlen(msg0)) << std::string(msg1, strlen(msg1)) << std::string(msg2, strlen(msg2)) << "\n";
         // int bytes = SSL_read(ssl, buffer, sizeof(buffer));
         // std::cout << "Received: " << buffer << std::endl;
     }
